@@ -38,8 +38,8 @@ public class User extends Auditable
 
     public User(String username, String password, List<UserRoles> userRoles)
     {
-        this.username = username;
-        this.password = password;
+        setUsername(username);
+        setPassword(password);
         for (UserRoles ur: userRoles)
         {
             ur.setUser(this);
