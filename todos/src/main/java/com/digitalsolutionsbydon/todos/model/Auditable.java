@@ -1,4 +1,4 @@
-package com.digitalsolutionsbydon.todos.model
+package com.digitalsolutionsbydon.todos.model;
 
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
