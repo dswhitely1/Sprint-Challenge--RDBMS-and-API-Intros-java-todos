@@ -2,6 +2,7 @@ package com.digitalsolutionsbydon.todos.model;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "todos")
@@ -14,7 +15,7 @@ public class Todo extends Auditable
     @Column(nullable = false)
     private String description;
 
-    private LocalDateTime datetime;
+    private Date datestarted;
     private boolean completed;
 
     @ManyToOne
@@ -25,11 +26,11 @@ public class Todo extends Auditable
     {
     }
 
-    public Todo(String description, LocalDateTime datetime, boolean completed, User user)
+    public Todo(String description, Date datestarted, User user)
     {
         this.description = description;
-        this.datetime = datetime;
-        this.completed = completed;
+        this.datestarted = datestarted;
+        this.completed = false;
         this.user = user;
     }
 
@@ -48,14 +49,14 @@ public class Todo extends Auditable
         this.description = description;
     }
 
-    public LocalDateTime getDatetime()
+    public Date getDatestarted()
     {
-        return datetime;
+        return datestarted;
     }
 
-    public void setDatetime(LocalDateTime datetime)
+    public void setDatestarted(Date datestarted)
     {
-        this.datetime = datetime;
+        this.datestarted = datestarted;
     }
 
     public boolean isCompleted()
