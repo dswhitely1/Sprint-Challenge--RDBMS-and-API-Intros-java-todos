@@ -30,7 +30,7 @@ public class Todo extends Auditable
     {
         this.description = description;
         this.datestarted = datestarted;
-        this.completed = false;
+//        this.completed = false;
         this.user = user;
     }
 

@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service(value = "userService")
@@ -26,6 +26,7 @@ public class UserServiceImpl implements UserService, UserDetailsService
     @Autowired
     private RoleRepository rolerepos;
 
+    @Transactional
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
     {
@@ -51,6 +52,7 @@ public class UserServiceImpl implements UserService, UserDetailsService
         return userrepos.findByUsername(name);
     }
 
+    @Transactional
     @Override
     public User findUserById(long id)
     {
@@ -82,10 +84,10 @@ public class UserServiceImpl implements UserService, UserDetailsService
         {
             newRoles.add(new UserRoles(newUser, ur.getRole()));
         }
-
+        newUser.setUserRoles(newRoles);
         for (Todo t : user.getTodos())
         {
-            newUser.getTodos().add(new Todo(t.getDescription(), LocalDateTime.now(), false, newUser));
+            newUser.getTodos().add(new Todo(t.getDescription(), new Date(), newUser));
         }
 
         return userrepos.save(newUser);
@@ -95,33 +97,33 @@ public class UserServiceImpl implements UserService, UserDetailsService
     @Override
     public User update(User user, long id)
     {
-        User currentUser = userrepos.findById(id).orElseThrow(()-> new EntityNotFoundException(Long.toString(id)));
+        User currentUser = userrepos.findById(id).orElseThrow(() -> new EntityNotFoundException(Long.toString(id)));
 
         if (user.getUsername() != null)
         {
             currentUser.setUsername(user.getUsername());
         }
 
-        if (user.getPassword()!=null)
+        if (user.getPassword() != null)
         {
             currentUser.setPasswordNoEncrypt(user.getPassword());
         }
 
-        if (user.getUserRoles().size()>0)
+        if (user.getUserRoles().size() > 0)
         {
             rolerepos.deleteUserRolesByUserId(currentUser.getUserid());
 
-            for (UserRoles ur: user.getUserRoles())
+            for (UserRoles ur : user.getUserRoles())
             {
                 rolerepos.insertUserRoles(id, ur.getRole().getRoleid());
             }
         }
 
-        if (user.getTodos().size()>0)
+        if (user.getTodos().size() > 0)
         {
-            for (Todo t: user.getTodos())
+            for (Todo t : user.getTodos())
             {
-                currentUser.getTodos().add(new Todo(t.getDescription(), LocalDateTime.now(), false, currentUser));
+                currentUser.getTodos().add(new Todo(t.getDescription(), new Date(), currentUser));
             }
         }
         return userrepos.save(currentUser);

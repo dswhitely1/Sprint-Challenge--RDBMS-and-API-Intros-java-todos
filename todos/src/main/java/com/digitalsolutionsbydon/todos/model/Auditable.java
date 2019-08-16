@@ -29,5 +29,5 @@ abstract class Auditable
 
     @LastModifiedDate
     @Temporal(TIMESTAMP)
-    protected String lastModifiedDate;
+    protected Date lastModifiedDate;
 }

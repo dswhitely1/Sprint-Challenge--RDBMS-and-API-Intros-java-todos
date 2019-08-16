@@ -56,9 +56,9 @@ public class TodoServiceImpl implements TodoService
             newTodo.setDescription(todo.getDescription());
         }
 
-        if (todo.getDatetime()!=null)
+        if (todo.getDatestarted()!=null)
         {
-            newTodo.setDatetime(todo.getDatetime());
+            newTodo.setDatestarted(todo.getDatestarted());
         }
         if (todo.getUser()!=null)
         {
